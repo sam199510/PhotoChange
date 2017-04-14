@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>图片轮播</title>
+	<link rel="stylesheet" type="text/css" href="pc.css">
+	<script type="text/javascript" src="move2.js"></script>
+	<script type="text/javascript">
+		window.onload=function(){
+			var oPictures=document.getElementById('pictures');
+			var oMiddleDown=document.getElementById('middleDown');
+			var aChangeBtn=oMiddleDown.getElementsByTagName('ol')[0].getElementsByTagName('li');
+			var oChangePic=oPictures.getElementsByTagName('ul')[0];
+			var oPrevBtn=document.getElementById('prevBtn');
+			var oNextBtn=document.getElementById('nextBtn');
+			var oMiddle=document.getElementById('middle');
+
+			var now=0;
+
+			for (var i = 0; i < aChangeBtn.length; i++) {
+				aChangeBtn[i].index=i
+				aChangeBtn[i].onclick=function(){
+					now=this.index;
+
+					change();
+				};
+			}
+
+			function change(){
+				for (var i = 0; i < aChangeBtn.length; i++) {
+					aChangeBtn[i].className='';
+				};
+
+				aChangeBtn[now].className="active";
+				startMove(oChangePic,{left: -400*now});
+			};
+
+			function next(){
+				now++;
+				if (now==aChangeBtn.length) {
+					now=0;
+				}
+				change();
+			};
+
+			function prev(){
+				now--;
+				if (now==-1) {
+					now=aChangeBtn.length-1;
+				}
+				change();
+			};
+
+			var timer=setInterval(next,6000);
+
+			oMiddle.onmouseover=function(){
+				clearInterval(timer);
+			};
+			oMiddle.onmouseout=function(){
+				timer=setInterval(next,6000);
+			};
+
+			oPrevBtn.onclick=function(){
+				prev();
+			};
+			oNextBtn.onclick=function(){
+				next();
+			};
+		};
+	</script>
+</head>
+<body>
+	<div id="top">
+		
+	</div>
+	<div id="middle">
+		<div id="middleUp">
+			<div id="prevBtn">
+				
+			</div>
+			<div id="pictures">
+				<ul>
+					<li><img src="images/Yosemite.jpg"></li>
+					<li><img src="images/Yosemite3.jpg"></li>
+					<li><img src="images/Yosemite4.jpg"></li>
+					<li><img src="images/ElCapitan.jpg"></li>
+					<li><img src="images/ElCapitan2.jpg"></li>
+					<li><img src="images/Sierra.jpg"></li>
+				</ul>
+			</div>
+			<div id="nextBtn">
+				
+			</div>
+		</div>
+		<div id="middleDown">
+			<ol>
+				<li class="active">1</li>
+				<li>2</li>
+				<li>3</li>
+				<li>4</li>
+				<li>5</li>
+				<li>6</li>
+			</ol>
+		</div>
+	</div>
+	<div id="bottom">
+		
+	</div>
+</body>
+</html>
